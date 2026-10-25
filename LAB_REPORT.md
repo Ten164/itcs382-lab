@@ -1,16 +1,16 @@
 # Lab Report, Code Quality and Design Quality
 
-Repository URL:
+Repository URL: https://github.com/Ten164/itcs382-lab.git
 
 ## Tools
 
 | Item | Version or name |
 | --- | --- |
-| JDK | |
-| Maven | |
-| IDE | |
-| SonarQube for IDE | |
-| AI tool and exact model | |
+| JDK | 17 |
+| Maven | 3.8.1 |
+| IDE | VS Code 1.143.1 |
+| SonarQube for IDE | Latest / 3.x |
+| AI tool and exact model | Google Gemini |
 
 ## Task 1. SonarQube on the starter code
 
@@ -105,12 +105,18 @@ Output of the program after your fixes, for the commands `store P1 6501 2`, `pic
 
 5.1 What does SonarQube check, and what does it not check? Answer with examples from this lab.
 
+SonarQube checks for static code quality issues, security vulnerabilities, code smells, and rule violations within the source code, such as detecting the use of System.out instead of a proper logger (rule java:S106) in this lab. However, it does not check dynamic runtime behavior, functional correctness, or whether the business logic accurately fulfills the project's specific requirements. For instance, it will flag syntax or style warnings, but it cannot verify if the bike-sharing fee calculation logic correctly computes the prices for students and staff.
+
 5.2 When should you not trust the AI review? Give an example from this lab.
 
+You should not blindly trust an AI review when it comes to domain-specific business logic, complex system requirements, or subtle architectural edge cases that require human validation. For example, if an AI review evaluates the modular design of bikeshare-good, it might overlook whether the separation between the StationManager and FeeRepository adheres strictly to the lab's exact specification constraints. Therefore, developer oversight and manual testing using the IDE and build tools remain essential.
+
 5.3 What will you do differently in Project Phase 2 after this lab?
+
+In Project Phase 2, I will incorporate modular design principles and clean separation of concerns right from the beginning rather than refactoring monolithic structures later. I will also integrate static code analysis tools like SonarQube earlier into the daily development workflow to catch code smells and quality issues proactively. Furthermore, I will use AI assistance more critically by systematically cross-checking generated snippets against requirements and test results.
 
 ## AI usage declaration
 
 | AI tool and exact model | Purpose | Files or parts that it produced or changed | How you checked its output |
 | --- | --- | --- | --- |
-| | | | |
+| Google Gemini | Assistance with project structure, code reviews, and lab reflection questions | bikeshare-poor/Main.java, bikeshare-good/Main.java, reviews/, LAB_REPORT.md | Verified manually in VS Code, tested compilation, and checked output against SonarQube static analysis |
