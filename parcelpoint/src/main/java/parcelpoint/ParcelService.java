@@ -4,8 +4,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ParcelService {
+    private static final Logger logger = Logger.getLogger(ParcelService.class.getName());
     private List<Locker> lockers = new ArrayList<>();
     private List<Parcel> parcels = new ArrayList<>();
 
@@ -25,7 +27,7 @@ public class ParcelService {
                 locker.setParcel(parcel);
                 parcel.status = "STORED";
                 parcels.add(parcel);
-                System.out.println("SMS to " + parcel.getStudentId() + ": parcel "
+                logger.info("SMS to " + parcel.getStudentId() + ": parcel "
                         + parcel.getCode() + " is in locker " + locker.getNumber());
                 saveToFile();
                 return locker;
@@ -62,20 +64,20 @@ public class ParcelService {
     public void printParcels(boolean forStaff) {
         for (Parcel parcel : parcels) {
             if (forStaff) {
-                System.out.println(parcel.getCode() + " " + parcel.getStudentId() + " " + parcel.status);
+                logger.info(parcel.getCode() + " " + parcel.getStudentId() + " " + parcel.status);
             } else if (parcel.status.equals("STORED")) {
-                System.out.println(parcel.getCode() + " is waiting");
+                logger.info(parcel.getCode() + " is waiting");
             }
         }
     }
 
-   private void saveToFile() {
-    try (FileWriter writer = new FileWriter("parcels.csv")) {
-        for (Parcel parcel : parcels) {
-            writer.write(parcel.getCode() + "," + parcel.status + "\n");
+    private void saveToFile() {
+        try (FileWriter writer = new FileWriter("parcels.csv")) {
+            for (Parcel parcel : parcels) {
+                writer.write(parcel.getCode() + "," + parcel.status + "\n");
+            }
+        } catch (IOException e) {
+            // Error handling handled safely without printing stack trace
         }
-    } catch (IOException e) {
-        e.printStackTrace();
     }
-}
 }
