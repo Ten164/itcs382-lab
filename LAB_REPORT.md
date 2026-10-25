@@ -14,35 +14,48 @@ Repository URL:
 
 ## Task 1. SonarQube on the starter code
 
-Commit of the starter, before any change:
+Commit of the starter, before any change: 64ea768
 
 Table 1. SonarQube issues in the starter code
 
 | No. | Rule | File:line | Message |
 | --- | --- | --- | --- |
-| 1 | | | |
+| 1 | java:S106 | Main.java:9 |Replace this use of System.out by a logger. |
+| 2 | java:S1068 | ParcelService.java:12 | Remove this unused "maxParcels" priv... |
+| 3 | java:S2143 | ParcelService.java:1 | Use the "java.time" API for date and time. |
 
 ## Task 2. AI review of the starter code
 
 | Item | Value |
 | --- | --- |
-| Date | |
-| AI tool and exact model | |
-| Commit reviewed | |
-| How the AI read the files (attached the files, opened the folder, or pasted the files) | |
-| Output file in the reviews folder | |
+| Date | 2026-10-25 |
+| AI tool and exact model | Gemini |
+| Commit reviewed | Starter code |
+| How the AI read the files (attached the files, opened the folder, or pasted the files) | pasted the files |
+| Output file in the reviews folder | reviews/gemini_review.txt |
 
 Table 2. All findings on the starter code
 
 | No. | File:line | Finding | Found by (SonarQube, AI or both) | SonarQube rule or course term | Correct? (yes or no, and why) |
 | --- | --- | --- | --- | --- | --- |
-| 1 | | | | | |
+| 1 | Main.java:9 | Replace this use of System.out by a logger | SonarQube | java:S106 | yes, loggers provide better control than System.out |
+| 2 | ParcelService.java:12 | Remove this unused "maxParcels" private field | SonarQube | java:S1068 | yes, keeping dead code makes maintenance harder |
+| 3 | ParcelService.java:1 | Use the "java.time" API for date and time | SonarQube | java:S2143 | yes, java.util.Date is outdated and bug-prone |
+| 4 | ParcelService.java:42 | String comparison using == instead of .equals() | AI | String Equality / Bug | yes, == checks memory reference, not actual string value |
+| 5 | ParcelService.java:72 | FileWriter resource is never closed | AI | Resource Leak | yes, unclosed files can cause memory leaks and file locks |
+| 6 | ParcelService.java:77 | Empty catch block swallows IOException | AI | Empty Catch Block | yes, silently ignoring errors hides potential crashes |
 
 2.1 Name two problems that only the AI review found.
 
+The string comparison bug using '==' instead of '.equals()' and the unclosed FileWriter resource leak.
+
 2.2 Name one problem that only SonarQube found, or write none.
 
+The unused private field "maxParcels" (Rule java:S1068).
+
 2.3 Name one AI finding that was wrong or too vague, and explain why. If every finding was right, explain how you checked them.
+
+Every finding was right. I checked them by verifying standard Java best practices (e.g., strings must be compared with .equals(), and resources like FileWriter must be closed to prevent memory leaks).
 
 ## Task 3. Fix and check
 
